@@ -1,117 +1,301 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-<title>Nethuli | Data Analytics Portfolio</title>
-
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Nethuli Narathota — Data Analytics</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Figtree:wght@300;400;500;600&display=swap" rel="stylesheet">
 <style>
-
-body{
-font-family: Arial, sans-serif;
-background:#0f172a;
-color:white;
-text-align:center;
-padding:50px;
+:root {
+  --cream: #141414;
+  --cream-dark: #1e1e1e;
+  --ink: #f0ebe0;
+  --ink-soft: #c8c0b0;
+  --muted: #6b6560;
+  --rule: rgba(240,235,224,0.1);
+  --gold: #c9a96e;
+  --white: #0a0a0a;
 }
-
-h1{
-font-size:48px;
-margin-bottom:10px;
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{font-family:'Figtree',sans-serif;background:var(--white);color:var(--ink);overflow-x:hidden;cursor:none;}
+.cur-dot{width:8px;height:8px;background:var(--ink);border-radius:50%;position:fixed;pointer-events:none;z-index:9999;transform:translate(-50%,-50%);transition:transform 0.1s,background 0.2s;}
+.cur-ring{width:32px;height:32px;border:1px solid rgba(240,235,224,0.35);border-radius:50%;position:fixed;pointer-events:none;z-index:9998;transform:translate(-50%,-50%);transition:opacity 0.2s;}
+.cur-dot.hover{transform:translate(-50%,-50%) scale(3);background:var(--gold);}
+.cur-ring.hover{opacity:0;}
+nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:center;justify-content:space-between;padding:28px 64px;background:rgba(10,10,10,0.92);backdrop-filter:blur(12px);border-bottom:1px solid var(--rule);}
+.nav-logo{font-family:'Cormorant Garamond',serif;font-weight:600;font-size:20px;letter-spacing:0.04em;}
+.nav-right{display:flex;align-items:center;gap:48px;}
+.nav-links{display:flex;gap:36px;list-style:none;}
+.nav-links a{font-size:11.5px;letter-spacing:0.14em;text-transform:uppercase;color:var(--muted);text-decoration:none;font-weight:500;transition:color 0.2s;}
+.nav-links a:hover{color:var(--ink);}
+.nav-cta{font-size:11.5px;letter-spacing:0.14em;text-transform:uppercase;font-weight:500;color:#0a0a0a;background:var(--gold);padding:10px 22px;text-decoration:none;transition:background 0.2s;}
+.nav-cta:hover{background:var(--ink-soft);color:#0a0a0a;}
+#hero{min-height:100vh;display:grid;grid-template-columns:1fr 1fr;padding-top:100px;}
+.hero-left{padding:80px 64px;display:flex;flex-direction:column;justify-content:center;border-right:1px solid var(--rule);}
+.hero-eyebrow{display:flex;align-items:center;gap:14px;font-size:11px;letter-spacing:0.2em;text-transform:uppercase;color:var(--gold);font-weight:600;margin-bottom:40px;opacity:0;animation:fadeIn 0.9s 0.1s forwards;}
+.hero-eyebrow span{display:block;width:32px;height:1px;background:var(--gold);}
+h1.name{font-family:'Cormorant Garamond',serif;font-size:clamp(72px,8vw,116px);font-weight:300;line-height:0.92;letter-spacing:-0.02em;margin-bottom:40px;opacity:0;animation:fadeIn 0.9s 0.25s forwards;}
+h1.name em{font-style:italic;color:var(--gold);}
+.hero-bio{font-size:15px;line-height:1.75;color:var(--muted);max-width:400px;font-weight:300;margin-bottom:52px;opacity:0;animation:fadeIn 0.9s 0.4s forwards;}
+.hero-bio strong{color:var(--ink);font-weight:500;}
+.hero-actions{display:flex;gap:16px;flex-wrap:wrap;opacity:0;animation:fadeIn 0.9s 0.55s forwards;}
+.btn-dark{display:inline-flex;align-items:center;gap:10px;background:var(--gold);color:#0a0a0a;font-family:'Figtree',sans-serif;font-size:12px;font-weight:600;letter-spacing:0.12em;text-transform:uppercase;padding:15px 32px;text-decoration:none;transition:background 0.2s,transform 0.2s;}
+.btn-dark:hover{background:var(--ink-soft);color:#0a0a0a;transform:translateY(-2px);}
+.btn-ghost{display:inline-flex;align-items:center;gap:10px;background:transparent;color:var(--ink);font-family:'Figtree',sans-serif;font-size:12px;font-weight:500;letter-spacing:0.12em;text-transform:uppercase;padding:14px 32px;text-decoration:none;border:1px solid var(--rule);transition:border-color 0.2s,transform 0.2s;}
+.btn-ghost:hover{border-color:var(--ink);transform:translateY(-2px);}
+.hero-right{display:flex;flex-direction:column;justify-content:flex-end;padding:80px 64px;opacity:0;animation:fadeIn 1s 0.5s forwards;}
+.stat-grid{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--rule);border:1px solid var(--rule);margin-bottom:48px;}
+.stat-item{background:#111111;padding:32px 28px;}
+.stat-num{font-family:'Cormorant Garamond',serif;font-size:52px;font-weight:300;line-height:1;color:var(--ink);margin-bottom:6px;}
+.stat-num sup{font-size:24px;vertical-align:super;color:var(--gold);}
+.stat-label{font-size:11px;letter-spacing:0.14em;text-transform:uppercase;color:var(--muted);font-weight:500;}
+.tools-row{display:flex;flex-wrap:wrap;gap:10px;}
+.tool-pill{font-size:11.5px;letter-spacing:0.06em;color:var(--ink-soft);background:var(--cream);border:1px solid var(--cream-dark);padding:7px 16px;font-weight:500;transition:background 0.2s,border-color 0.2s,color 0.2s;}
+.tool-pill:hover{background:var(--gold);color:#0a0a0a;border-color:var(--gold);}
+.section-wrap{max-width:1200px;margin:0 auto;padding:100px 64px;border-bottom:1px solid var(--rule);}
+.section-header{display:flex;align-items:baseline;justify-content:space-between;margin-bottom:64px;padding-bottom:24px;border-bottom:1px solid var(--rule);}
+.section-title{font-family:'Cormorant Garamond',serif;font-size:clamp(40px,5vw,64px);font-weight:300;letter-spacing:-0.02em;line-height:1;}
+.section-title em{font-style:italic;color:var(--gold);}
+.section-index{font-size:11px;letter-spacing:0.2em;text-transform:uppercase;color:var(--muted);font-weight:500;}
+.project-row{display:grid;grid-template-columns:80px 1fr 220px;align-items:start;gap:40px;padding:44px 0;border-bottom:1px solid var(--rule);text-decoration:none;color:inherit;position:relative;transition:background 0.25s;}
+.project-row::after{content:'';position:absolute;left:-64px;right:-64px;top:0;bottom:0;background:var(--cream);z-index:-1;transform:scaleX(0);transform-origin:left;transition:transform 0.35s cubic-bezier(0.16,1,0.3,1);}
+.project-row:hover::after{transform:scaleX(1);}
+.project-num{font-family:'Cormorant Garamond',serif;font-size:48px;font-weight:300;color:var(--cream-dark);line-height:1;transition:color 0.2s;}
+.project-row:hover .project-num{color:var(--gold);}
+.project-title{font-family:'Cormorant Garamond',serif;font-size:32px;font-weight:400;letter-spacing:-0.01em;margin-bottom:10px;transition:color 0.2s;line-height:1.1;}
+.project-desc{font-size:14px;line-height:1.7;color:var(--muted);font-weight:300;max-width:520px;}
+.project-meta{display:flex;flex-direction:column;align-items:flex-end;gap:12px;}
+.project-tags{display:flex;flex-wrap:wrap;gap:8px;justify-content:flex-end;}
+.tag{font-size:10.5px;letter-spacing:0.1em;text-transform:uppercase;color:var(--muted);border:1px solid var(--rule);padding:5px 12px;font-weight:500;background:#111111;}
+.project-arrow{font-size:22px;color:var(--cream-dark);transition:color 0.2s,transform 0.2s;line-height:1;}
+.project-row:hover .project-arrow{color:var(--ink);transform:translate(4px,-4px);}
+.skills-columns{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--rule);border:1px solid var(--rule);}
+.skill-col{background:#111111;padding:40px 36px;}
+.skill-col-title{font-size:11px;letter-spacing:0.18em;text-transform:uppercase;color:var(--gold);font-weight:600;margin-bottom:24px;padding-bottom:16px;border-bottom:1px solid var(--rule);}
+.skill-list{list-style:none;display:flex;flex-direction:column;gap:12px;}
+.skill-list li{display:flex;align-items:center;gap:10px;font-size:14px;color:var(--ink-soft);font-weight:400;}
+.skill-list li::before{content:'';width:4px;height:4px;background:var(--gold);border-radius:50%;flex-shrink:0;}
+.connect-layout{display:grid;grid-template-columns:1fr 1fr;gap:64px;align-items:center;}
+.connect-statement{font-family:'Cormorant Garamond',serif;font-size:clamp(28px,3.5vw,44px);font-weight:300;line-height:1.3;letter-spacing:-0.01em;}
+.connect-statement em{font-style:italic;color:var(--gold);}
+.connect-links{display:flex;flex-direction:column;gap:2px;}
+.connect-link{display:flex;align-items:center;justify-content:space-between;padding:28px 32px;background:var(--cream);border:1px solid var(--cream-dark);text-decoration:none;color:var(--ink-soft);transition:background 0.2s,border-color 0.2s,color 0.2s;margin-bottom:2px;}
+.connect-link:hover{background:var(--gold);border-color:var(--gold);color:#0a0a0a;}
+.cl-name{font-family:'Cormorant Garamond',serif;font-size:22px;font-weight:400;}
+.cl-handle{font-size:12px;color:var(--muted);letter-spacing:0.06em;margin-top:2px;transition:color 0.2s;}
+.connect-link:hover .cl-handle{color:rgba(10,10,10,0.6);}
+.cl-arrow{font-size:20px;transition:transform 0.2s;}
+.connect-link:hover .cl-arrow{transform:translate(3px,-3px);}
+footer{display:flex;align-items:center;justify-content:space-between;padding:32px 64px;}
+.footer-name{font-family:'Cormorant Garamond',serif;font-size:18px;font-weight:400;letter-spacing:0.02em;}
+.footer-copy{font-size:12px;color:var(--muted);letter-spacing:0.08em;}
+.footer-status{display:flex;align-items:center;gap:8px;font-size:11.5px;color:#3a8a5a;font-weight:500;letter-spacing:0.06em;}
+.status-dot{width:7px;height:7px;background:#3a8a5a;border-radius:50%;animation:pulse 2.5s infinite;}
+.reveal{opacity:0;transform:translateY(28px);transition:opacity 0.8s cubic-bezier(0.16,1,0.3,1),transform 0.8s cubic-bezier(0.16,1,0.3,1);}
+.reveal.on{opacity:1;transform:none;}
+@keyframes fadeIn{from{opacity:0;transform:translateY(20px);}to{opacity:1;transform:none;}}
+@keyframes pulse{0%,100%{opacity:1;box-shadow:0 0 0 0 rgba(58,138,90,0.4);}50%{opacity:0.7;box-shadow:0 0 0 5px rgba(58,138,90,0);}}
+@media(max-width:900px){
+  nav{padding:20px 28px;}
+  .nav-links,.nav-cta{display:none;}
+  #hero{grid-template-columns:1fr;}
+  .hero-left{padding:80px 28px 48px;border-right:none;border-bottom:1px solid var(--rule);}
+  .hero-right{padding:48px 28px 60px;}
+  .section-wrap{padding:72px 28px;}
+  .project-row{grid-template-columns:48px 1fr;gap:20px;}
+  .project-meta{display:none;}
+  .skills-columns{grid-template-columns:1fr;}
+  .connect-layout{grid-template-columns:1fr;gap:40px;}
+  footer{padding:28px;flex-direction:column;gap:12px;text-align:center;}
+  .section-header{flex-direction:column;gap:8px;}
 }
-
-p{
-color:#cbd5f5;
-}
-
-.section{
-margin-top:60px;
-}
-
-button{
-background:#2563eb;
-border:none;
-padding:12px 25px;
-margin:10px;
-border-radius:8px;
-color:white;
-font-size:16px;
-cursor:pointer;
-}
-
-button:hover{
-background:#1d4ed8;
-}
-
-.project{
-background:#1e293b;
-padding:20px;
-margin:20px auto;
-width:60%;
-border-radius:10px;
-}
-
-a{
-text-decoration:none;
-}
-
 </style>
-
 </head>
-
 <body>
 
-<h1>Hi, I'm Nethuli 👋</h1>
-<p>Data Analytics Student | Python | SQL | Power BI | Data Visualization</p>
+<div class="cur-dot" id="curDot"></div>
+<div class="cur-ring" id="curRing"></div>
 
-<div class="section">
+<nav>
+  <div class="nav-logo">Nethuli Narathota</div>
+  <div class="nav-right">
+    <ul class="nav-links">
+      <li><a href="#skills">Expertise</a></li>
+      <li><a href="#projects">Projects</a></li>
+      <li><a href="#connect">Contact</a></li>
+    </ul>
+    <a href="https://github.com/nethuli0216" target="_blank" class="nav-cta">GitHub →</a>
+  </div>
+</nav>
 
-<h2>Connect With Me</h2>
+<section id="hero">
+  <div class="hero-left">
+    <div class="hero-eyebrow"><span></span>Data Analytics</div>
+    <h1 class="name">Nethuli<br><em>Narathota</em></h1>
+    <p class="hero-bio">
+      I turn complex data into <strong>clear decisions.</strong> Specialising in analytical dashboards, predictive modelling, and data storytelling that drives real outcomes.
+    </p>
+    <div class="hero-actions">
+      <a href="#projects" class="btn-dark">View My Work</a>
+      <a href="https://linkedin.com" target="_blank" class="btn-ghost">LinkedIn ↗</a>
+    </div>
+  </div>
+  <div class="hero-right">
+    <div class="stat-grid">
+      <div class="stat-item">
+        <div class="stat-num">3<sup>+</sup></div>
+        <div class="stat-label">Featured Projects</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-num">5<sup>+</sup></div>
+        <div class="stat-label">Tools & Languages</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-num" style="display:flex;align-items:center;">
+          <svg width="40" height="40" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.2" style="color:var(--gold)"><path stroke-linecap="round" stroke-linejoin="round" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/></svg>
+        </div>
+        <div class="stat-label">Data Visualisation</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-num" style="display:flex;align-items:center;">
+          <svg width="40" height="40" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.2" style="color:var(--gold)"><path stroke-linecap="round" stroke-linejoin="round" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"/></svg>
+        </div>
+        <div class="stat-label">Predictive Modelling</div>
+      </div>
+    </div>
+    <div class="tools-row">
+      <span class="tool-pill">Python</span>
+      <span class="tool-pill">SQL</span>
+      <span class="tool-pill">Power BI</span>
+      <span class="tool-pill">R & Shiny</span>
+      <span class="tool-pill">DAX</span>
+      <span class="tool-pill">Pandas</span>
+      <span class="tool-pill">Excel</span>
+    </div>
+  </div>
+</section>
 
-<a href="https://github.com/nethuli0216">
-<button>GitHub</button>
-</a>
-
-<a href="https://linkedin.com">
-<button>LinkedIn</button>
-</a>
-
+<div class="section-wrap" id="skills">
+  <div class="section-header reveal">
+    <h2 class="section-title">Areas of <em>Expertise</em></h2>
+    <span class="section-index">01 — Expertise</span>
+  </div>
+  <div class="skills-columns reveal">
+    <div class="skill-col">
+      <div class="skill-col-title">Analytics & Modelling</div>
+      <ul class="skill-list">
+        <li>Statistical Analysis</li>
+        <li>Predictive Modelling</li>
+        <li>Machine Learning</li>
+        <li>Hypothesis Testing</li>
+        <li>Regression Analysis</li>
+      </ul>
+    </div>
+    <div class="skill-col">
+      <div class="skill-col-title">Tools & Languages</div>
+      <ul class="skill-list">
+        <li>Python (Pandas, NumPy)</li>
+        <li>SQL & Database Design</li>
+        <li>R & Shiny Apps</li>
+        <li>Power BI & DAX</li>
+        <li>Excel & Power Query</li>
+      </ul>
+    </div>
+    <div class="skill-col">
+      <div class="skill-col-title">Visualisation & Reporting</div>
+      <ul class="skill-list">
+        <li>Interactive Dashboards</li>
+        <li>Data Storytelling</li>
+        <li>KPI Reporting</li>
+        <li>Chart Design</li>
+        <li>Stakeholder Presentation</li>
+      </ul>
+    </div>
+  </div>
 </div>
 
-
-<div class="section">
-
-<h2>Featured Projects</h2>
-
-<div class="project">
-<h3>Olympic Games Power BI Dashboard</h3>
-<p>Interactive dashboard analyzing Olympic medal trends, participation, and country performance.</p>
-<a href="https://github.com/nethuli0216/olympic-games-powerbi-dashboard">
-<button>View Project</button>
-</a>
+<div class="section-wrap" id="projects">
+  <div class="section-header reveal">
+    <h2 class="section-title">Featured <em>Projects</em></h2>
+    <span class="section-index">02 — Work</span>
+  </div>
+  <a href="https://github.com/nethuli0216/olympic-games-powerbi-dashboard" target="_blank" class="project-row reveal">
+    <div class="project-num">01</div>
+    <div class="project-body">
+      <div class="project-title">Olympic Games Power BI Dashboard</div>
+      <p class="project-desc">Interactive dashboard analysing Olympic medal trends, athlete participation, and country-level performance across decades of Games data. Built with advanced DAX measures and drill-through reporting.</p>
+    </div>
+    <div class="project-meta">
+      <div class="project-tags"><span class="tag">Power BI</span><span class="tag">DAX</span><span class="tag">Data Viz</span></div>
+      <div class="project-arrow">↗</div>
+    </div>
+  </a>
+  <a href="https://github.com/nethuli0216/TMA-Risk-Prediction-ShinyApp" target="_blank" class="project-row reveal">
+    <div class="project-num">02</div>
+    <div class="project-body">
+      <div class="project-title">TMA Risk Prediction Shiny App</div>
+      <p class="project-desc">Clinical analytics dashboard for predicting transplant-associated thrombotic microangiopathy risk. Combines statistical modelling with an intuitive R Shiny interface for medical decision support.</p>
+    </div>
+    <div class="project-meta">
+      <div class="project-tags"><span class="tag">R</span><span class="tag">Shiny</span><span class="tag">ML</span><span class="tag">Clinical</span></div>
+      <div class="project-arrow">↗</div>
+    </div>
+  </a>
+  <a href="https://github.com/nethuli0216/sdg-education-employment-analytics" target="_blank" class="project-row reveal">
+    <div class="project-num">03</div>
+    <div class="project-body">
+      <div class="project-title">SDG Education & Employment Analysis</div>
+      <p class="project-desc">Comprehensive data analysis exploring correlations between global education outcomes and employment indicators across SDG datasets. Produced actionable insights for policy-relevant storytelling.</p>
+    </div>
+    <div class="project-meta">
+      <div class="project-tags"><span class="tag">Python</span><span class="tag">SQL</span><span class="tag">Analysis</span></div>
+      <div class="project-arrow">↗</div>
+    </div>
+  </a>
 </div>
 
-<div class="project">
-<h3>TMA Risk Prediction Shiny App</h3>
-<p>Data analytics dashboard for transplant-associated thrombotic microangiopathy risk prediction.</p>
-<a href="https://github.com/nethuli0216/TMA-Risk-Prediction-ShinyApp">
-<button>View Project</button>
-</a>
+<div class="section-wrap" id="connect">
+  <div class="section-header reveal">
+    <h2 class="section-title">Get in <em>Touch</em></h2>
+    <span class="section-index">03 — Contact</span>
+  </div>
+  <div class="connect-layout">
+    <div class="connect-statement reveal">
+      Open to <em>opportunities,</em> collaborations, and conversations about data.
+    </div>
+    <div class="connect-links reveal">
+      <a href="https://github.com/nethuli0216" target="_blank" class="connect-link">
+        <div><div class="cl-name">GitHub</div><div class="cl-handle">github.com/nethuli0216</div></div>
+        <div class="cl-arrow">↗</div>
+      </a>
+      <a href="https://linkedin.com" target="_blank" class="connect-link">
+        <div><div class="cl-name">LinkedIn</div><div class="cl-handle">Connect professionally</div></div>
+        <div class="cl-arrow">↗</div>
+      </a>
+    </div>
+  </div>
 </div>
 
-<div class="project">
-<h3>SDG Education & Employment Analysis</h3>
-<p>Data analysis exploring the relationship between education and employment indicators.</p>
-<a href="https://github.com/nethuli0216/sdg-education-employment-analytics">
-<button>View Project</button>
-</a>
-</div>
+<footer>
+  <div class="footer-name">Nethuli Narathota</div>
+  <div class="footer-copy">© 2026 — All rights reserved</div>
+  <div class="footer-status"><div class="status-dot"></div>Available for opportunities</div>
+</footer>
 
-</div>
-
-<div class="section">
-
-<p>© 2026 Nethuli</p>
-
-</div>
-
+<script>
+const dot=document.getElementById('curDot'),ring=document.getElementById('curRing');
+let mx=0,my=0,rx=0,ry=0;
+document.addEventListener('mousemove',e=>{mx=e.clientX;my=e.clientY;dot.style.left=mx+'px';dot.style.top=my+'px';});
+(function loop(){rx+=(mx-rx)*0.1;ry+=(my-ry)*0.1;ring.style.left=rx+'px';ring.style.top=ry+'px';requestAnimationFrame(loop);})();
+document.querySelectorAll('a,button,.tool-pill').forEach(el=>{
+  el.addEventListener('mouseenter',()=>{dot.classList.add('hover');ring.classList.add('hover');});
+  el.addEventListener('mouseleave',()=>{dot.classList.remove('hover');ring.classList.remove('hover');});
+});
+const reveals=document.querySelectorAll('.reveal');
+const io=new IntersectionObserver(entries=>{entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('on');io.unobserve(e.target);}});},{threshold:0.1});
+reveals.forEach((el,i)=>{el.style.transitionDelay=(i%3)*0.1+'s';io.observe(el);});
+</script>
 </body>
 </html>
